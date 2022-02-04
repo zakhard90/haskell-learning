@@ -16,25 +16,19 @@ main = do
     print $ validate x
 
 validate :: [Int] -> Bool
-validate x = ((sumAll (sub9 (mulOdd (reverse (init x)))) * 10) + (last x)) `mod` 10 == 0
+validate xs = dTen . (+) (last xs) . (*) 10 . sum . sub9 . doubleOdd . reverse $ init xs 
 
--- Split number into digits
-digits :: Int -> [Int]
-digits 0 = []
-digits x = digits (x `div` 10) ++ [x `mod` 10]
+-- Check if can be divided by 10
+dTen :: Int -> Bool
+dTen x = x `mod` 10 == 0
 
 -- Multiply odd positions by 2
-mulOdd :: [Int] -> [Int]
-mulOdd [] = []
-mulOdd [x] = [x]
-mulOdd (x:y:xs) = x * 2 : y : mulOdd xs
+doubleOdd :: [Int] -> [Int]
+doubleOdd [] = []
+doubleOdd [x] = [x]
+doubleOdd (x:y:xs) = x * 2 : y : doubleOdd xs
 
 -- Sub 9 from > 9
 sub9 :: [Int] -> [Int]
 sub9 [] = []  
 sub9 (x:xs) = if x > 9 then (x - 9) : sub9 xs else x : sub9 xs
-
--- Sum all
-sumAll :: [Int] -> Int
-sumAll [] = 0
-sumAll (x:xs) = x + sumAll xs
