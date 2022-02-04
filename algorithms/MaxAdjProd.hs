@@ -12,4 +12,5 @@ genMaxAdjProd n list@(x:xs)
   where 
     go :: (Num a, Ord a) => Int -> a -> [a] -> a
     go m maxVal [_] = maxVal
-    go m maxVal sublist@(y:ys) = go m (max (product (take m sublist)) maxVal) (tail sublist)
+    go m maxVal sublist@(y:ys) = 
+      go m (max (product (take m sublist)) maxVal) (tail sublist)
